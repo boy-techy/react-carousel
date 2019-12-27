@@ -1,16 +1,15 @@
 import React, { PureComponent } from 'react';
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { productActions } from "../../store/actions";
-import { ProductCarousel, ProductListing } from "../common";
-import './index.scss'
+import { productActions } from "../../../store/actions";
+import { ProductCarousel, ProductListing } from "../../common";
+import './home.scss';
 
 
 class HomePage extends PureComponent {
     
     componentDidMount() {
         const { actions } = this.props;
-        // actions.fetchProducts(1);
         actions.fetchCarouselMeta();
     }
     
@@ -31,9 +30,7 @@ const mapStateToProps = ({ product }) => ({
 
 const mapDispatchToProps = dispatch => ({
     actions: bindActionCreators({
-        fetchProducts: productActions.fetchProducts,
         fetchCarouselMeta: productActions.fetchCarouselMeta,
-        fetchProductDetail: productActions.fetchProductDetail
     }, dispatch)
 });
 

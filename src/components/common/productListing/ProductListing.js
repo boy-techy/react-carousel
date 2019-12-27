@@ -4,14 +4,15 @@ import { connect } from "react-redux";
 import { productActions } from "../../../store/actions";
 import ProductCard from "./ProductCard";
 import { LoadMore } from "./LoadMore";
-import './index.scss'
+import './productListing.scss'
 
 
 class ProductListing extends Component {
     
     componentDidMount() {
-        const { actions } = this.props;
-        actions.fetchProducts(1);
+        const { actions, productsMeta } = this.props;
+        const productList = productsMeta.data || [];
+        !productList.length && actions.fetchProducts(1);
     }
     
     redirectOnDetailPage = id => {
@@ -21,6 +22,7 @@ class ProductListing extends Component {
     render() {
         const { productsMeta, actions } = this.props;
         const productList = productsMeta.data || [];
+        const currentPage = productsMeta.nextPage ? productsMeta.nextPage - 1 : 1;
         
         const _products = productList.map(product =>
           <li key={product.id} onClick={() => this.redirectOnDetailPage(product.id)}>
@@ -28,10 +30,10 @@ class ProductListing extends Component {
           </li>);
         
         return <>
-        <ul className="product-list-container">
-            {_products}
-        </ul>
-        {_products.length ? <LoadMore loadMoreHandler={actions.fetchProducts}/> : null}
+            <ul className="product-list-container">
+                {_products}
+            </ul>
+            {_products.length ? <LoadMore loadMoreHandler={actions.fetchProducts} initialPage={currentPage}/> : null}
         </>
     }
     
