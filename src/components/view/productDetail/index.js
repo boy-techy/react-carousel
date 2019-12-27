@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { productActions } from "../../../store/actions";
-import { Rating } from "../../common";
+import { Loader, Rating } from "../../common";
 import "./productDetail.scss"
 
 class ProductDetail extends PureComponent {
@@ -13,11 +13,12 @@ class ProductDetail extends PureComponent {
     
     
     render() {
-        const { productDetail, productDetailLoader } = this.props;
-        if (!productDetail) {
-            return null;
+        const { productDetail, productDetailLoader, history } = this.props;
+        if (!productDetail || productDetailLoader) {
+            return <Loader isLoading={true}/>;
         }
         return <div className="product-detail-container">
+            <button type="button" className="back-btn" onClick={() => history.goBack()}>Back</button>
             <div className="detail-card-container">
                 <img src={productDetail.img} alt={productDetail.name}/>
                 <div className="content">
@@ -36,7 +37,6 @@ class ProductDetail extends PureComponent {
 const mapStateToProps = ({ product }) => ({
     productDetail: product.productDetail,
     productDetailLoader: product.productDetailLoader,
-    
 });
 
 const mapDispatchToProps = dispatch => ({

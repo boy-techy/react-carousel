@@ -1,0 +1,61 @@
+@mixin contents($borderColor, $height, $width, $animationName) {
+  content: "";
+  border: 5px solid $borderColor;
+  border-radius: 50%;
+  display: inline-block;
+  height: $height;
+  width: $width;
+  animation: $animationName 2s infinite;
+}
+
+.loader {
+  height: 60px;
+  width: 60px;
+  //border: 5px solid;
+  //border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  &:after {
+    @include contents(red, 56px, 56px, innerLoader);
+  }
+
+  &:before {
+    @include contents(green, 46px, 46px, inner1Loader);
+    position: absolute;
+    top: 6px;
+    left: 5px;
+  }
+}
+
+@keyframes innerLoader {
+  0% {
+    transform: rotate3d(0, 1, 0, 0deg);
+    transform-origin: center;
+  }
+  50% {
+    transform: rotate3d(0, 40, 0, 180deg);
+    transform-origin: center;
+  }
+  100% {
+    transform: rotate3d(0, 1, 0, 0deg);
+    transform-origin: center;
+  }
+}
+
+@keyframes inner1Loader {
+  0% {
+    transform: rotate3d(1, 0, 0, 0deg);
+    transform-origin: center;
+  }
+  50% {
+    transform: rotate3d(40, 0, 0, 180deg);
+    transform-origin: center;
+  }
+  100% {
+    transform: rotate3d(1, 0, 0, 0deg);
+    transform-origin: center;
+  }
+}

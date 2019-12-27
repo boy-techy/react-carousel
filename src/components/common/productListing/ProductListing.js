@@ -20,7 +20,7 @@ class ProductListing extends Component {
     };
     
     render() {
-        const { productsMeta, actions } = this.props;
+        const { productsMeta, actions, loader } = this.props;
         const productList = productsMeta.data || [];
         const currentPage = productsMeta.nextPage ? productsMeta.nextPage - 1 : 1;
         
@@ -33,14 +33,21 @@ class ProductListing extends Component {
             <ul className="product-list-container">
                 {_products}
             </ul>
-            {_products.length ? <LoadMore loadMoreHandler={actions.fetchProducts} initialPage={currentPage}/> : null}
+            {_products.length ?
+              <LoadMore
+                loadMoreHandler={actions.fetchProducts}
+                loader={loader}
+                initialPage={currentPage}/>
+              : null
+            }
         </>
     }
     
 }
 
 const mapStateToProps = ({ product }) => ({
-    productsMeta: product.products || {}
+    productsMeta: product.products || {},
+    loader: product.productsLoader
 });
 
 const mapDispatchToProps = dispatch => ({
