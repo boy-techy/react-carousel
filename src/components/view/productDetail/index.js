@@ -7,8 +7,8 @@ import "./productDetail.scss"
 
 class ProductDetail extends PureComponent {
     componentDidMount() {
-        const { actions } = this.props;
-        actions.fetchProductDetail(7);
+        const { actions, match } = this.props;
+        actions.fetchProductDetail(match.params.id);
     }
     
     

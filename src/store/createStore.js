@@ -1,6 +1,7 @@
 import { applyMiddleware, compose, createStore as createReduxStore } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from './reducers';
+import { isServer } from "../services/util";
 
 const createStore = (initialState = {}) => {
     
@@ -9,7 +10,7 @@ const createStore = (initialState = {}) => {
     let composeEnhancers = compose;
     
     // if (__DEV__) {
-    if (typeof window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ === 'function') {
+    if (!isServer() && typeof window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ === 'function') {
         composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
     }
     // }
@@ -23,5 +24,5 @@ const createStore = (initialState = {}) => {
     );
     
 };
-
-export default createStore;
+const store = createStore({});
+export default store;

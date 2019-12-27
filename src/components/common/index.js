@@ -4,6 +4,7 @@ import ProductCarousel from './productCarousel';
 import ProductListing from './productListing/ProductListing'
 import { Rating } from './rating';
 import Loader from './loader';
+import { PageNotFound } from "./PageNotFound";
 
 export {
     Footer,
@@ -11,5 +12,6 @@ export {
     ProductCarousel,
     ProductListing,
     Rating,
-    Loader
+    Loader,
+    PageNotFound
 }

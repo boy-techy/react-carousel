@@ -2,6 +2,8 @@ const path = require("path");
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const WebpackManifest = require('webpack-manifest-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const publicPath = process.env.NODE_ENV === 'production' ? '/dist' : '/';
 
 
 module.exports = {
@@ -22,6 +24,7 @@ module.exports = {
             {
                 test: /\.(css|scss)$/,
                 use: ['style-loader',
+                    MiniCssExtractPlugin.loader,
                     {
                         loader: 'css-loader',
                         options: {
@@ -58,6 +61,9 @@ module.exports = {
             fileName: 'manifest.json',
             writeToFileEmit: true
         }),
+        new MiniCssExtractPlugin({
+            filename: "style.css"
+        }),
         new HtmlWebPackPlugin({
             template: './index.html',
             filename: './index.html'
@@ -65,11 +71,11 @@ module.exports = {
     ],
     devServer: {
         port: '3000',
-        contentBase: [path.resolve(__dirname, 'dist'),path.resolve(__dirname, 'assets')], //static files path
+        contentBase: [path.resolve(__dirname, 'dist')], //static files path
         historyApiFallback: true,
         watchContentBase: true,
         compress: true,
-        publicPath: '/', // To serve bundles from
+        publicPath: publicPath, // To serve bundles from
         injectClient: true, // for HMR injection
         injectHot: true, // for HMR injection
     },
@@ -77,7 +83,7 @@ module.exports = {
         filename: '[name].[hash].js',
         chunkFilename: '[name].[hash].js',
         path: path.resolve(__dirname, 'dist'),
-        publicPath: '/',
+        publicPath: publicPath,
     },
     optimization: {
         splitChunks: {
