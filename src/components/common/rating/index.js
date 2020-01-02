@@ -8,8 +8,9 @@ export const Rating = ({ value }) => {
     return (
       <div className='rating'>
           {
-              generateRangeArray(MIN, MAX).map(item => (
+              generateRangeArray(MIN, MAX).map((item, key) => (
                 <RatingItem
+                  key={key}
                   colored={value >= item}
                   checked={value === item}
                   value={item}

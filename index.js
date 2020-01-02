@@ -6,26 +6,18 @@ import { Provider } from "react-redux";
 import App from "./src/App";
 import "./reset.css";
 import store from "./src/store/createStore";
-import { isServer } from "./src/services/util";
 
-if (isServer()) {
-    ReactDOM.hydrate(
-      <Provider store={store}>
-          <BrowserRouter>
-              <App/>
-          </BrowserRouter>
-      </Provider>,
-      document.getElementById('root')
-    );
-} else {
-    ReactDOM.render(
-      <Provider store={store}>
-          <BrowserRouter>
-              <App/>
-          </BrowserRouter>
-      </Provider>,
-      document.getElementById('root')
-    );
-}
+const ROOT_NODE = document.getElementById('root');
+const domFunction = ROOT_NODE.childNodes.length ? 'hydrate' : 'render';
+
+ReactDOM[domFunction](
+  <Provider store={store}>
+      <BrowserRouter>
+          <App/>
+      </BrowserRouter>
+  </Provider>,
+  ROOT_NODE
+);
+
 
 export default hot(module)(App);
