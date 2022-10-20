@@ -5,3 +5,5 @@ Run Project ->
 For ssr
     1. npm run build
     2. npm run ssr_start
+
+    
